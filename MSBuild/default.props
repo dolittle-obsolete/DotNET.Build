@@ -20,6 +20,7 @@
         <TreatSpecificWarningsAsErrors />
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>        
         <DocumentationFile>$()../../Artifacts/$(AssemblyName).xml</DocumentationFile>
+        <IsTestProject>false</IsTestProject>
     </PropertyGroup>
 
     <ItemGroup>

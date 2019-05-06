@@ -9,7 +9,7 @@ Common build for all .NET Based projects.
 This project should be a Git sub-module of your project.
 
 ```shell
-$ git submodule add https://github.com/dolittle/DotNET.Build.git Build
+$ git submodule add https://github.com/dolittle-tools/DotNET.Build.git Build
 ```
 
 ### CSharp Project file
