@@ -11,7 +11,7 @@ Target "RestorePackages" (fun _ ->
             (fun p ->
                 { p with
                     Project = project
-                    AdditionalArgs = ["--ignore-failed-sources"]
+                    AdditionalArgs = ["--ignore-failed-sources";"--no-cache"]
                     NoCache = false })
 
     projects |> Seq.iter (restoreProject)
