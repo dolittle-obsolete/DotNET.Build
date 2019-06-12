@@ -1,6 +1,7 @@
 #!/bin/bash
 export PACKAGEDIR=$PWD/Packages
-export PACKAGEVERSION=3.1000.0
+export PACKAGE_MAJOR_VERSION=$(git tag --sort=-version:refname | head -1 | sed 's/\([0-9]*\).*$/\1/g')
+export PACKAGEVERSION=$PACKAGE_MAJOR_VERSION.1000.0
 export TARGETROOT=~/.nuget/packages
 
 if [ ! -d "$PACKAGEDIR" ]; then
