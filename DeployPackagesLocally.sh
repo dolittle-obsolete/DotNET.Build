@@ -26,7 +26,7 @@ done
 
 for f in $PACKAGEDIR/*.nupkg; do
     echo ""
-    packagename=$(basename ${f%.3.1000.0.nupkg})
+    packagename=$(basename ${f%.$PACKAGE_MAJOR_VERSION.1000.0.nupkg})
     target=$TARGETROOT/$packagename/$PACKAGEVERSION
     # Delete outdated .nupkg 
     find $TARGETROOT/$packagename -name $PACKAGEVERSION -exec rm -rf {} \;
