@@ -1,6 +1,6 @@
 #!/bin/bash
 [[ ! -d Source ]] && { echo "You're probably in the wrong folder. Execute this command from the root of the repository"; exit 1; }
-export REMOTE=upstream
+export REMOTE=origin
 [[ ! -z "$1" ]] && REMOTE=$1
 
 {
