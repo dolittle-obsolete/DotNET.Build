@@ -1,4 +1,13 @@
 #!/bin/bash
+[[ ! -d Source ]] && { echo "You're probably in the wrong folder. Execute this command from the root of the repository"; exit 1; }
+export REMOTE=origin
+[[ ! -z "$1" ]] && REMOTE=$1
+
+{
+  git fetch $REMOTE
+
+} &> /dev/null
+[[ $? -ne 0 ]] && { echo "An error happened while trying to get latest tags. There is probably not a remote called '$REMOTE'"; exit 1; }
 export PACKAGEDIR=$PWD/Packages
 export PACKAGE_MAJOR_VERSION=$(git tag --sort=-version:refname | head -1 | sed 's/\([0-9]*\).*$/\1/g')
 export PACKAGEVERSION=$PACKAGE_MAJOR_VERSION.1000.0
@@ -17,7 +26,7 @@ done
 
 for f in $PACKAGEDIR/*.nupkg; do
     echo ""
-    packagename=$(basename ${f%.3.1000.0.nupkg})
+    packagename=$(basename ${f%.$PACKAGE_MAJOR_VERSION.1000.0.nupkg})
     target=$TARGETROOT/$packagename/$PACKAGEVERSION
     # Delete outdated .nupkg 
     find $TARGETROOT/$packagename -name $PACKAGEVERSION -exec rm -rf {} \;
