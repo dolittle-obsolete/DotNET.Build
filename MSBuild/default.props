@@ -21,6 +21,9 @@
         <AllowUnsafeBlocks>True</AllowUnsafeBlocks>        
         <DocumentationFile>$()../../Artifacts/$(AssemblyName).xml</DocumentationFile>
         <IsTestProject>false</IsTestProject>
+
+        <IncludeSymbols>True</IncludeSymbols>
+        <IncludeSource>True</IncludeSource>
     </PropertyGroup>
 
     <ItemGroup>

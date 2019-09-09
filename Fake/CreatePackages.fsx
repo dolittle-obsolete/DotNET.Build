@@ -16,7 +16,7 @@ Target "CreatePackages" (fun _ ->
                 { p with
                     Project = project
                     Configuration = "Release"
-                    AdditionalArgs = ["--no-restore"; "--no-build";"--include-symbols";"--include-source"]
+                    AdditionalArgs = ["--no-restore"; "--no-build"]
                     OutputPath = Globals.NuGetOutputPath })
 
     projects |> Seq.iter (buildProject)
