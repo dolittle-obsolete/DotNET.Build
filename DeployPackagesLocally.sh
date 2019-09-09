@@ -18,7 +18,7 @@ if [ ! -d "$PACKAGEDIR" ]; then
 fi
 
 rm $PACKAGEDIR/*
-dotnet pack -p:PackageVersion=$PACKAGEVERSION --include-symbols --include-source -o $PACKAGEDIR
+dotnet pack -p:PackageVersion=$PACKAGEVERSION -o $PACKAGEDIR
 
 for f in $PACKAGEDIR/*.symbols.nupkg; do
   mv ${f} ${f/.symbols/}
