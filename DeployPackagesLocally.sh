@@ -27,13 +27,27 @@ done
 for f in $PACKAGEDIR/*.nupkg; do
     echo ""
     packagename=$(basename ${f%.$PACKAGE_MAJOR_VERSION.1000.0.nupkg})
+    packagename=${packagename,,}
     target=$TARGETROOT/$packagename/$PACKAGEVERSION
     # Delete outdated .nupkg 
     find $TARGETROOT/$packagename -name $PACKAGEVERSION -exec rm -rf {} \;
 
     mkdir -pv $target && cp -v $f $target
     # Unzip package
-    tar -xzf $target/$(basename $f) -C $target
+    unzip -qq $target/$(basename $f) -d $target
     # Create an empty .sha512 file, or else it won't recognize the package for some reason
     touch $target/$(basename $f).sha512
+
+    pushd $TARGETROOT/$packagename
+    find . -maxdepth 2 -type f | while read path; do
+      dir="$(dirname $path)"
+      file="$(basename $path)"
+      if [ ! "$path" = "${path,,}" ]; then
+          mv "$path" "$dir/${file,,}"
+      fi
+    done
+    find . | while read path; do
+      chmod 755 "$path"
+    done
+    popd
 done
