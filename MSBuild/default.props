@@ -24,6 +24,8 @@
 
         <IncludeSymbols>True</IncludeSymbols>
         <IncludeSource>True</IncludeSource>
+
+        <NoWarn>NU5118</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>
