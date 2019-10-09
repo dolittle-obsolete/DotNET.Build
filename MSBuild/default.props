@@ -7,7 +7,7 @@
         <DebugType>portable</DebugType>
         <PackageTags>MVVM;SOLID;CQRS;LOB</PackageTags>
         <PackageReleaseNotes>https://github.com/dolittle/Home/blob/master/CHANGELOG.md</PackageReleaseNotes>
-        <PackageIconUrl>https://github.com/dolittle/Home/raw/master/Media/Logo/logo_128x128.png</PackageIconUrl>
+        <PackageIcon>logo.png</PackageIcon>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/dolittle/Home</RepositoryUrl>
@@ -34,6 +34,10 @@
       <Content Remove="obj\**\*" />
       <Content Remove="wwwroot\**\*" />
     </ItemGroup>
+
+  <ItemGroup>
+    <None Include="logo.png" Pack="true" Visible="false" PackagePath="" />
+  </ItemGroup>    
     
     <ItemGroup>
         <None Update="**\*.cs">
