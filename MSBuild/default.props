@@ -36,7 +36,7 @@
     </ItemGroup>
 
   <ItemGroup>
-    <None Include="logo.png" Pack="true" Visible="false" PackagePath="" />
+    <None Include="$(MSBuildThisFileDirectory)logo.png" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>    
     
     <ItemGroup>
