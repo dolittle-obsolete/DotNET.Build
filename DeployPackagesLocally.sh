@@ -45,10 +45,13 @@ for f in $PACKAGEDIR/*.nupkg; do
 
     pushd $TARGETROOT/$packagename
     find . -maxdepth 2 -type f | while read path; do
+
       dir="$(dirname $path)"
       file="$(basename $path)"
-      if [ ! "$path" = "${path,,}" ]; then
-          mv "$path" "$dir/${file,,}"
+      low_path=$(echo "$path" | tr [A-Z] [a-z])
+      low_file=$(echo "$file" | tr [A-Z] [a-z])
+      if [ ! "$path" = "$low_path" ]; then
+          mv "$path" "$dir/$low_file"
       fi
     done
     find . | while read path; do
