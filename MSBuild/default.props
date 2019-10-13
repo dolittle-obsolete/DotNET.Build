@@ -13,6 +13,7 @@
         <RepositoryUrl>https://github.com/dolittle/Home</RepositoryUrl>
         <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
         <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+        <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)code_analysis.ruleset</CodeAnalysisRuleSet>
 
         <DefaultItemExcludes>gulp\**\*;node_modules\**\*;jspm_packages\**\*;bower_components\**\*;wwwroot\**\*;bin\**\*;obj\**\*</DefaultItemExcludes>
         <NoWarn>NU5105</NoWarn>
