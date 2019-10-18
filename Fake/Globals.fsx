@@ -9,7 +9,7 @@ open Versioning
 type Globals() =
     static let rootDirectory = Directory.GetCurrentDirectory()
     static let gitVersion = Versioning.GetVersionFromGit()
-    static let buildNumber = Versioning.GetBuildNumber()
+    static let buildNumber = Versioning.GetBuildNumber(gitVersion.Build)
     static let isRelease = if String.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("DOLITTLERELEASE")) then false else true
     static let buildVersion = new BuildVersion(gitVersion.Major, gitVersion.Minor, gitVersion.Patch, buildNumber, gitVersion.PreReleaseString, isRelease)
     static let isWindows = Environment.OSVersion.Platform = PlatformID.Win32NT

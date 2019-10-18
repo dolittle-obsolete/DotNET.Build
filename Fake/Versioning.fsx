@@ -17,7 +17,7 @@ module Versioning =
         let buildVersion = new BuildVersion(version)
         buildVersion
 
-    let GetBuildNumber() =
+    let GetBuildNumber(existingBuildNumber) =
         let envBuildNumber = Environment.GetEnvironmentVariable("APPVEYOR_BUILD_NUMBER")
-        let buildNumber = if String.IsNullOrWhiteSpace(envBuildNumber) then 0 else envBuildNumber |> int
+        let buildNumber = if String.IsNullOrWhiteSpace(envBuildNumber) then existingBuildNumber else envBuildNumber |> int
         buildNumber
