@@ -2,18 +2,31 @@
 [[ ! -d Source ]] && { echo "You're probably in the wrong folder. Execute this command from the root of the repository"; exit 1; }
 
 if [ ! -z "$1" ]; then
-  PACKAGE_MAJOR_VERSION="$1"
+  VERSION=$1.0.0
 else
   {
     git fetch origin
 
   } &> /dev/null
   [[ $? -ne 0 ]] && { echo "An error happened while trying to get latest tags. There is probably not a remote called '$REMOTE'"; exit 1; }
-  PACKAGE_MAJOR_VERSION=$(git tag --sort=-version:refname | head -1 | sed 's/\([0-9]*\).*$/\1/g')
+  VERSION=$(git tag --sort=-version:refname | head -1) 
 fi
 
+MAJOR_VERSION=$(echo $VERSION | sed 's/\([0-9]*\).*$/\1/g')
+MINOR_VERSION=$(echo $VERSION | sed 's/[0-9]*.\([0-9]*\).*$/\1/g')
+PATCH_VERSION=$(echo $VERSION | sed 's/[0-9]*.[0-9]*.\([0-9]*\).*$/\1/g')
+PRE_RELEASE_TAG=$(echo $VERSION | sed 's/[0-9]*.[0.9]*.[0-9]-\([a-zA-Z]*\).*$/\1/g')
+
+if [ -n "$PRE_RELEASE_TAG" ]; then
+    PACKAGE_VERSION=$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION-$PRE_RELEASE_TAG.1000
+else
+    PACKAGE_VERSION=$MAJOR_VERSION.1000.0
+fi
+
+echo "Git Version : " $VERSION 
+echo "Package Version : " $PACKAGE_VERSION
+
 PACKAGEDIR=$PWD/Packages
-PACKAGEVERSION=$PACKAGE_MAJOR_VERSION.1000.0
 TARGETROOT=~/.nuget/packages
 
 if [ ! -d "$PACKAGEDIR" ]; then
@@ -21,7 +34,7 @@ if [ ! -d "$PACKAGEDIR" ]; then
 fi
 
 rm $PACKAGEDIR/*
-dotnet pack -p:PackageVersion=$PACKAGEVERSION -o $PACKAGEDIR
+dotnet pack -p:PackageVersion=$PACKAGE_VERSION -o $PACKAGEDIR
 
 for f in $PACKAGEDIR/*.symbols.nupkg; do
   mv ${f} ${f/.symbols/}
@@ -29,11 +42,11 @@ done
 
 for f in $PACKAGEDIR/*.nupkg; do
     echo ""
-    packagename=$(basename ${f%.$PACKAGE_MAJOR_VERSION.1000.0.nupkg})
+    packagename=$(basename ${f%.$PACKAGE_VERSION.nupkg})
     packagename=$(echo "$packagename" | tr [A-Z] [a-z])
-    target=$TARGETROOT/$packagename/$PACKAGEVERSION
+    target=$TARGETROOT/$packagename/$PACKAGE_VERSION
     # Delete outdated .nupkg 
-    find $TARGETROOT/$packagename -name $PACKAGEVERSION -exec rm -rf {} \;
+    find $TARGETROOT/$packagename -name $PACKAGE_VERSION -exec rm -rf {} \;
 
     mkdir -pv $target && cp -v $f $target
     # Unzip package
