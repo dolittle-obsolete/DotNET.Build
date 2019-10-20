@@ -17,13 +17,20 @@ MINOR_VERSION=$(echo $VERSION | sed 's/[0-9]*.\([0-9]*\).*$/\1/g')
 PATCH_VERSION=$(echo $VERSION | sed 's/[0-9]*.[0-9]*.\([0-9]*\).*$/\1/g')
 PRE_RELEASE_TAG=$(echo $VERSION | sed 's/[0-9]*.[0.9]*.[0-9]-\([a-zA-Z]*\).*$/\1/g')
 
+if [ $PRE_RELEASE_TAG = $VERSION ]; then
+    PRE_RELEASE_TAG=
+fi
+
 if [ -n "$PRE_RELEASE_TAG" ]; then
     PACKAGE_VERSION=$MAJOR_VERSION.$MINOR_VERSION.$PATCH_VERSION-$PRE_RELEASE_TAG.1000
 else
     PACKAGE_VERSION=$MAJOR_VERSION.1000.0
 fi
 
-echo "Git Version : " $VERSION 
+echo "Git Version : " $VERSION
+echo "Major Version : " $MAJOR_VERSION
+echo "Minor Version : " $MINOR_VERSION
+echo "Patch Version : " $PATCH_VERSION
 echo "Package Version : " $PACKAGE_VERSION
 
 PACKAGEDIR=$PWD/Packages
