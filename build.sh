@@ -14,14 +14,14 @@ popd  > /dev/null
 NUGET_PATH="$SCRIPT_PATH/.nuget";
 PACKAGES_PATH="$SCRIPT_PATH/packages";
 
-if ! [ -f $NUGET_PATH/.nuget/nuget.exe ] 
+if ! [ -f $NUGET_PATH/nuget.exe ] 
     then
         wget "https://www.nuget.org/nuget.exe" -P "$NUGET_PATH"
 fi
 
-mono $NUGET_PATH/NuGet.exe update -self
-mono $NUGET_PATH/NuGet.exe install FAKE -OutputDirectory $PACKAGES_PATH -ExcludeVersion -Version 4.61.3
-mono $NUGET_PATH/NuGet.exe install FSharp.Data -OutputDirectory $PACKAGES_PATH/FAKE -ExcludeVersion -Version 2.3.3
+mono $NUGET_PATH/nuget.exe update -self
+mono $NUGET_PATH/nuget.exe install FAKE -OutputDirectory $PACKAGES_PATH -ExcludeVersion -Version 4.61.3
+mono $NUGET_PATH/nuget.exe install FSharp.Data -OutputDirectory $PACKAGES_PATH/FAKE -ExcludeVersion -Version 2.3.3
 
 export encoding=utf-8
 
