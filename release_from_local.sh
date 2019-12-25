@@ -4,12 +4,14 @@
 
 export PACKAGEDIR=$PWD/Artifacts/NuGet
 export DOLITTLERELEASE=true
+export VERSION=$(git tag --sort=-version:refname | head -1)
 
 rm -rf $PWD/Artifacts
 
-$PWD/Build/build.sh DeployFromLocal
+dotnet pack -p:PackageVersion=$VERSION -c release -o $PACKAGEDIR
 
-for f in $PACKAGEDIR/*.symbols.nupkg; do
+for f in $PACKAGEDIR/*.symbols.nupkg
+do
     nuget push $f -Source https://api.nuget.org/v3/index.json   
 done
 
