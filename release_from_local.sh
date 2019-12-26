@@ -14,3 +14,8 @@ for f in $PACKAGEDIR/*.symbols.nupkg
 do
     nuget push $f -Source https://api.nuget.org/v3/index.json   
 done
+
+for f in $PACKAGEDIR/*.nupkg
+do
+    nuget push $f -Source https://api.nuget.org/v3/index.json   
+done
