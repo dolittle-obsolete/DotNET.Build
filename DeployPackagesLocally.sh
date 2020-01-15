@@ -33,6 +33,8 @@ echo "Minor Version : " $MINOR_VERSION
 echo "Patch Version : " $PATCH_VERSION
 echo "Package Version : " $PACKAGE_VERSION
 
+VERSION=
+
 PACKAGEDIR=$PWD/Packages
 TARGETROOT=~/.nuget/packages
 
