@@ -41,42 +41,14 @@ if [ ! -d "$PACKAGEDIR" ]; then
 fi
 
 rm $PACKAGEDIR/*
-dotnet pack -p:PackageVersion=$PACKAGE_VERSION -o $PACKAGEDIR
-
-for f in $PACKAGEDIR/*.symbols.nupkg; do
-  mv ${f} ${f/.symbols/}
-done
+dotnet pack --output $PACKAGEDIR -p:PackageVersion=$PACKAGE_VERSION  -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
 
 for f in $PACKAGEDIR/*.nupkg; do
-    echo ""
     packagename=$(basename ${f%.$PACKAGE_VERSION.nupkg})
     packagename=$(echo "$packagename" | tr [A-Z] [a-z])
-    target=$TARGETROOT/$packagename/$PACKAGE_VERSION
     # Delete outdated .nupkg 
     find $TARGETROOT/$packagename -name $PACKAGE_VERSION -exec rm -rf {} \;
 
-    mkdir -pv $target && cp -v $f $target
-    # Unzip package
-    unzip -qq $target/$(basename $f) -d $target 
-
-
-    # Create an empty .sha512 file, or else it won't recognize the package for some reason
-    touch $target/$(basename $f).sha512
-
-    pushd $TARGETROOT/$packagename
-    find . -maxdepth 2 -type f | while read path; do
-
-      dir="$(dirname $path)"
-      file="$(basename $path)"
-      low_path=$(echo "$path" | tr [A-Z] [a-z])
-      low_file=$(echo "$file" | tr [A-Z] [a-z])
-      if [ ! "$path" = "$low_path" ]; then
-          mv "$path" "$dir/$low_file"
-      fi
-    done
-    find . | while read path; do
-      chmod 755 "$path"
-    done
-    popd
-
 done
+
+nuget init "$PACKAGEDIR" "$TARGETROOT" -Expand -NonInteractive
