@@ -13,9 +13,9 @@ else
 fi
 
 MAJOR_VERSION=$(echo $VERSION | sed 's/v*\([0-9]*\).*$/\1/g')
-MINOR_VERSION=$(echo $VERSION | sed 's/[0-9]*.\([0-9]*\).*$/\1/g')
-PATCH_VERSION=$(echo $VERSION | sed 's/[0-9]*.[0-9]*.\([0-9]*\).*$/\1/g')
-PRE_RELEASE_TAG=$(echo $VERSION | sed 's/[0-9]*.[0.9]*.[0-9]-\([a-zA-Z]*\).*$/\1/g')
+MINOR_VERSION=$(echo $VERSION | sed 's/v*[0-9]*.\([0-9]*\).*$/\1/g')
+PATCH_VERSION=$(echo $VERSION | sed 's/v*[0-9]*.[0-9]*.\([0-9]*\).*$/\1/g')
+PRE_RELEASE_TAG=$(echo $VERSION | sed 's/v*[0-9]*.[0.9]*.[0-9]-\([a-zA-Z]*\).*$/\1/g')
 
 if [ $PRE_RELEASE_TAG = $VERSION ]; then
     PRE_RELEASE_TAG=
