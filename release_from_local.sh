@@ -27,7 +27,7 @@ VERSION=
 
 rm -rf $PWD/Artifacts
 
-dotnet pack -p:PackageVersion=$PACKAGE_VERSION -c release -o $PACKAGEDIR
+dotnet pack -p:PackageVersion=$PACKAGE_VERSION -c release -o $PACKAGEDIR -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
 
 for f in $PACKAGEDIR/*.symbols.nupkg
 do
