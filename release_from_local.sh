@@ -29,12 +29,18 @@ rm -rf $PWD/Artifacts
 
 dotnet pack -p:PackageVersion=$PACKAGE_VERSION -c release -o $PACKAGEDIR -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    NUGET="mono /usr/local/bin/nuget.exe"
+else
+    NUGET="nuget"
+fi
+
 for f in $PACKAGEDIR/*.symbols.nupkg
 do
-    nuget push $f -Source https://api.nuget.org/v3/index.json   
+    eval "$NUGET push $f -Source https://api.nuget.org/v3/index.json"
 done
 
 for f in $PACKAGEDIR/*.nupkg
 do
-    nuget push $f -Source https://api.nuget.org/v3/index.json   
+    eval "$NUGET push $f -Source https://api.nuget.org/v3/index.json"
 done
