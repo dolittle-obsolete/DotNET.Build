@@ -53,4 +53,8 @@ for f in $PACKAGEDIR/*.nupkg; do
 
 done
 
-nuget init "$PACKAGEDIR" "$TARGETROOT" -Expand -NonInteractive
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    mono /usr/local/bin/nuget.exe init "$PACKAGEDIR" "$TARGETROOT" -Expand -NonInteractive
+else
+    nuget init "$PACKAGEDIR" "$TARGETROOT" -Expand -NonInteractive
+fi
